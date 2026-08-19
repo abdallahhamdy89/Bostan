@@ -1,0 +1,37 @@
+{
+  "name": "bostan-dues",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node ./node_modules/vite/bin/vite.js",
+    "build": "node ./node_modules/vite/bin/vite.js build",
+    "preview": "node ./node_modules/vite/bin/vite.js preview",
+    "api": "tsx server/index.ts",
+    "dev:all": "concurrently \"npm run api\" \"npm run dev\"",
+    "db:up": "docker compose up -d db",
+    "db:down": "docker compose down",
+    "db:logs": "docker compose logs -f db",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio"
+  },
+  "devDependencies": {
+    "prisma": "latest",
+    "tsx": "latest"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "latest",
+    "@prisma/client": "latest",
+    "@vitejs/plugin-react": "latest",
+    "vite": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "concurrently": "latest",
+    "exceljs": "latest",
+    "express": "latest",
+    "lucide-react": "latest",
+    "multer": "latest",
+    "pg": "latest"
+  }
+}
