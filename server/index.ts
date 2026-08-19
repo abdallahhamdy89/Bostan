@@ -5,7 +5,9 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../prisma/generated/client/client";
 import { importBuildingWorkbook, HISTORICAL_PERIOD } from "./importExcel";
 
-loadEnvFile(".env");
+// Only load .env locally — hosting platforms (Render, etc.) inject env vars directly
+// and don't provide a .env file, so loadEnvFile would throw and crash startup there.
+try { loadEnvFile(".env"); } catch { /* no .env file — rely on platform-injected env vars */ }
 if (!process.env.DATABASE_URL) throw new Error("DATABASE_URL is missing. Copy .env.example to .env first.");
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }) });
 const app = express();
@@ -405,4 +407,5 @@ app.post("/api/imports/excel", upload.single("file"), async (request, response) 
 
 app.use((_request, response) => response.status(404).json({ error: "مسار API غير موجود." }));
 
-app.listen(3001, () => console.log("Bostan API is running on http://localhost:3001"));
+const port = Number(process.env.PORT) || 3001;
+app.listen(port, () => console.log(`Bostan API is running on http://localhost:${port}`));
