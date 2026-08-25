@@ -5,13 +5,15 @@ set -e
 APP_DIR="/home/ubuntu/Bostan"
 NODE_BIN="/home/ubuntu/node-v22.23.2-linux-arm64/bin"
 
+export PRISMA_SCHEMA_ENGINE_BINARY="$APP_DIR/schema-engine"
+
 cd "$APP_DIR"
 
 echo "========================================"
 echo " Bostan Deployment"
 echo "========================================"
-
 echo
+
 echo "==> Checking working tree..."
 
 if [ -n "$(git status --porcelain)" ]; then
@@ -61,6 +63,7 @@ sudo systemctl --no-pager --full status bostan-ui.service
 
 echo
 echo "==> Testing API..."
+
 if curl -sf http://localhost:3001 >/dev/null; then
     echo "API is responding."
 else
@@ -70,6 +73,7 @@ fi
 
 echo
 echo "==> Testing UI..."
+
 if curl -sf http://localhost:5173 >/dev/null; then
     echo "UI is responding."
 else
