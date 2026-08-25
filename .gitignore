@@ -8,3 +8,4 @@ prisma/generated/
 *.log
 .DS_Store
 .claude/settings.local.json
+schema-engine
